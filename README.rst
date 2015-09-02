@@ -43,6 +43,8 @@ These keyword actions are available::
         Arguments:
             - fromEmail: the email address of the sender (not required)
             - toEmail:   the email address of the receiver (not required)
+            - subject:   the subject of the email (not required)
+            - text:      some text from email body (not required)
             - status:    the status of the email (not required)
             - timeout:   the timeout how long the mailbox shall check emails
                          in seconds (defaults to 60 seconds)

@@ -28,8 +28,8 @@ class ImapLibrary(object):
         self.imap.select()
         self._init_walking_multipart()
 
-    def wait_for_mail(self, fromEmail=None, toEmail=None, status=None,
-                      timeout=60):
+    def wait_for_mail(self, fromEmail=None, toEmail=None, 
+                      subject=None, text=None, status=None, timeout=60):
         """
         Wait for an incoming mail from a specific sender to
         a specific mail receiver. Check the mailbox every 10
@@ -188,20 +188,24 @@ class ImapLibrary(object):
         """
         return self._mp_msg[field]
 
-    def _criteria(self, fromEmail, toEmail, status):
+    def _criteria(self, fromEmail, toEmail, subject, text, status):
         crit = []
         if fromEmail:
-            crit += ['FROM', fromEmail]
+            crit += ['FROM', '"' + fromEmail + '"']
         if toEmail:
-            crit += ['TO', toEmail]
+            crit += ['TO', '"' + toEmail + '"']
+		if subject:
+            crit += ['SUBJECT', '"' + subject + '"']
+        if text:
+            crit += ['TEXT', '"' + text + '"']
         if status:
             crit += [status]
         if not crit:
             crit = ['UNSEEN']
         return crit
 
-    def _check_emails(self, fromEmail, toEmail, status):
-        crit = self._criteria(fromEmail, toEmail, status)
+    def _check_emails(self, fromEmail, toEmail, subject, text, status):
+        crit = self._criteria(fromEmail, toEmail, subject, text, status)
         # Calling select before each search is necessary with gmail
         status, data = self.imap.select()
         if status != 'OK':
