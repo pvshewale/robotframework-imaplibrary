@@ -194,7 +194,7 @@ class ImapLibrary(object):
             crit += ['FROM', '"' + fromEmail + '"']
         if toEmail:
             crit += ['TO', '"' + toEmail + '"']
-		if subject:
+	if subject:
             crit += ['SUBJECT', '"' + subject + '"']
         if text:
             crit += ['TEXT', '"' + text + '"']
