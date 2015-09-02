@@ -41,7 +41,7 @@ class ImapLibrary(object):
         """
         endTime = time.time() + int(timeout)
         while (time.time() < endTime):
-            self.mails = self._check_emails(fromEmail, toEmail, status)
+            self.mails = self._check_emails(fromEmail, toEmail, subject, text, status)
             if len(self.mails) > 0:
                 return self.mails[-1]
             if time.time() < endTime:
